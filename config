@@ -1,0 +1,31 @@
+# number of virtual workers
+export NODE_NUM=2
+
+# input csv file absolute path.
+# the input file should be a comma separated double data matrix.
+# each row is a vector to be compared.
+export INPUT=/lustre/scratch117/casm/cosmic/sw23/1000row.csv
+export SAMPLE_NUM=1000
+export PROBE_NUM=54675
+BLOCK_SIZE=$((${SAMPLE_NUM} / ${NODE_NUM}))
+
+if [ $((${SAMPLE_NUM} % ${NODE_NUM})) -ne 0 ]; then
+	BLOCK_SIZE=$((${BLOCK_SIZE} + 1))
+fi
+
+export BLOCK_SIZE
+
+export CALC_NUM=$((${BLOCK_SIZE} * ${NODE_NUM}))
+
+# tmp data folder
+export TMP=/lustre/scratch117/casm/cosmic/sw23/tmp
+
+# tmp data DATA_FILE_PREFIX
+export DATA_FILE_PRE=/lustre/scratch117/casm/cosmic/sw23/tmp/block_
+
+# result folder
+export RES=/lustre/scratch117/casm/cosmic/sw23/results
+
+# result data prefix
+export RES_FILE_PRE=/lustre/scratch117/casm/cosmic/sw23/results/block
+
