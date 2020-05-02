@@ -7,9 +7,6 @@
 # sure you have filled the config file correctly, before you run this script.
 ###################################################################################
 
-# Performance test purpose
-date
-
 # load the config file
 source ${SINGULARITY_R_COR_HOME}/config
 
@@ -23,32 +20,29 @@ mkdir -p ${TMP}/logs
 
 export LOG_FOLDER=${TMP}/logs
 
-echo Preparing
+echo "Preparing"
 ${SINGULARITY_R_COR_HOME}/bin/prepare.sh
 
-echo Running
-
-/software/singularity-v3.5.3/bin/singularity pull --name singularity-r.simg shub://nickjer/singularity-r
-
-bsub -I -R "select[mem>8000] rusage[mem=8000] span[hosts=1]" -M 8000 -G team238-grp "/software/singularity-v3.5.3/bin/singularity pull docker://norbnorb/stats"
-
+echo "start LSF"
 JOB=singr
 FOLDER_NUMBER=${NODE_NUM}
 CPU_NUMBER=10
 bsub -G team238-grp -q normal -o ${LOG_FOLDER}/${JOB}.outfile.%J.%I -e ${LOG_FOLDER}/${JOB}.err.%J.%I -J ${JOB}[1-${FOLDER_NUMBER}]%${CPU_NUMBER} "${SINGULARITY_R_COR_HOME}/bin/singr_wrapper.sh"
 
-# remove data block files in TMP
-# to save space to data merging.
-#echo Cleaning tmp block
-#rm -fr ${TMP}/block*
+PRE_JOB=${JOB}
+JOB=link
+FOLDER_NUMBER=1
+CPU_NUMBER=1
+bsub -w "done(${PRE_JOB})" -G team238-grp -q normal -o ${LOG_FOLDER}/${JOB}.outfile.%J.%I -e ${LOG_FOLDER}/${JOB}.err.%J.%I -J ${JOB}[1-${FOLDER_NUMBER}]%${CPU_NUMBER} "${SINGULARITY_R_COR_HOME}/bin/link.sh"
 
-# write the data merging script to
-# the NFS TMP folder for the Spark master (spark1).
-# run the data merging scrpt in the master.
-echo Merging data
+PRE_JOB=${JOB}
+JOB=sub_merge
+FOLDER_NUMBER=${NODE_NUM}
+CPU_NUMBER=10
+bsub -w "done(${PRE_JOB})" -G team238-grp -q normal -o ${LOG_FOLDER}/${JOB}.outfile.%J.%I -e ${LOG_FOLDER}/${JOB}.err.%J.%I -J ${JOB}[1-${FOLDER_NUMBER}]%${CPU_NUMBER} "${SINGULARITY_R_COR_HOME}/bin/sub_merge.sh"
 
-# install csvtools and create an image
-
-${SINGULARITY_R_COR_HOME}/bin/merge.sh
-
-date
+PRE_JOB=${JOB}
+JOB=merge
+FOLDER_NUMBER=1
+CPU_NUMBER=1
+bsub -w "done(${PRE_JOB})" -G team238-grp -q normal -o ${LOG_FOLDER}/${JOB}.outfile.%J.%I -e ${LOG_FOLDER}/${JOB}.err.%J.%I -J ${JOB}[1-${FOLDER_NUMBER}]%${CPU_NUMBER} "${SINGULARITY_R_COR_HOME}/bin/merge.sh"
