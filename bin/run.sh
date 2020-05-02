@@ -7,6 +7,8 @@
 # sure you have filled the config file correctly, before you run this script.
 ###################################################################################
 
+date
+
 # load the config file
 source ${SINGULARITY_R_COR_HOME}/config
 
