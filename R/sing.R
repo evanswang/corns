@@ -16,6 +16,7 @@ dataFile <- Sys.getenv(c("DATA_FILE_PRE"))
 resultFile <- Sys.getenv(c("RES_FILE_PRE"))
 # [input] LSB job index
 x <- Sys.getenv(c("LSB_JOBINDEX"))
+x_num <- as.numeric(x) - 1
 
 geneCor <- function(x) {
 		x <- as.numeric(x)
@@ -27,6 +28,7 @@ geneCor <- function(x) {
 				#print(j)
 				matTmp <- matrix( scan( paste(dataFile, x + j - 1, sep=""), skip=0, sep=',' ), ncol=probesNum, byrow=TRUE )
 				matTo[((j - 1) * bufSize + 1) : (j * bufSize), ] <- cor(t(matFrom), t(matTmp), method=cormethod)
+				print(paste(resultFile, x, x + j - 1, sep="_"))
 				write.table(matTo[((j - 1) * bufSize + 1) : (j * bufSize), ], file = paste(resultFile, x, x + j - 1, sep="_"), row.names = FALSE, col.names = FALSE, sep = ",")
 			}
 			return(0)
@@ -79,4 +81,4 @@ geneCor <- function(x) {
 		}
 }
 
-geneCor(x)
+geneCor(x_num)

@@ -1,5 +1,5 @@
 # number of virtual workers
-export NODE_NUM=2
+export NODE_NUM=10
 
 # input csv file absolute path.
 # the input file should be a comma separated double data matrix.
