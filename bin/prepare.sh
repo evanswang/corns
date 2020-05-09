@@ -11,6 +11,12 @@
 # load the config file
 source ${SINGULARITY_R_COR_HOME}/config
 
+rm -fr ${TMP}
+rm -fr ${RES}
+mkdir -p ${TMP}
+mkdir -p ${RES}
+mkdir -p ${TMP}/logs
+
 # double check the virtual worker number
 # and input file
 echo ${NODE_NUM}
