@@ -1,2 +1,3 @@
-csvtool_latest.sif
-singularity-r.simg
+*.sif
+*.simg
+work/

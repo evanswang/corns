@@ -10,7 +10,7 @@
 
 # load the config file
 source ${SINGULARITY_R_COR_HOME}/config
-
+exit 0
 rm -fr ${TMP}
 rm -fr ${RES}
 mkdir -p ${TMP}
