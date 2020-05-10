@@ -4,8 +4,8 @@ export NODE_NUM=28
 # input csv file absolute path.
 # the input file should be a comma separated double data matrix.
 # each row is a vector to be compared.
-export INPUT=/lustre/scratch117/casm/cosmic/sw23/1000row.csv
-export SAMPLE_NUM=1000
+export SAMPLE_NUM=2000
+export INPUT=/lustre/scratch117/casm/cosmic/sw23/${SAMPLE_NUM}row.csv
 export PROBE_NUM=54675
 BLOCK_SIZE=$((${SAMPLE_NUM} / ${NODE_NUM}))
 

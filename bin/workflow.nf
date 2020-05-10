@@ -7,7 +7,7 @@ params.merge = "/lustre/scratch117/casm/cosmic/sw23/SingularityRCor/bin/merge.sh
 
 
 process spilt_proc {
-  echo true
+  echo false
   
   output:
   val 0 into ch_inputBlocks
@@ -20,7 +20,7 @@ process spilt_proc {
 }
 
 process calc_proc {
-  echo true
+  echo false
   
   input:
   val block_file from ch_inputBlocks
@@ -43,7 +43,7 @@ process calc_proc {
 }
 
 process link_proc {
-  echo true
+  echo false
 
   input:
   val input_val from ch_calc.sum()
@@ -63,7 +63,7 @@ process link_proc {
 }
 
 process subMerge_proc {
-  echo true
+  echo false
 
   input:
   val input_val from ch_link
@@ -83,7 +83,7 @@ process subMerge_proc {
 }
 
 process merge_proc {
-  echo true
+  echo false
 
   input:
   val input_val from ch_subMerge.sum()
