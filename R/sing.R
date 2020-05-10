@@ -15,9 +15,9 @@ lastoneNum <- patientNum - (nodesNum - 1) * bufSize
 dataFile <- Sys.getenv(c("DATA_FILE_PRE"))
 resultFile <- Sys.getenv(c("RES_FILE_PRE"))
 # [input] LSB job index
-x <- Sys.getenv(c("LSB_JOBINDEX"))
-x_num <- as.numeric(x) - 1
-
+#x <- Sys.getenv(c("LSB_JOBINDEX"))
+args <- commandArgs(trailingOnly = TRUE)
+x_num <- as.numeric(args[1])
 geneCor <- function(x) {
 		x <- as.numeric(x)
 		if (x < averFloor - 1) {

@@ -9,8 +9,12 @@
 ###################################################################################
 
 # load the config file
+SINGULARITY_R_COR_HOME=/lustre/scratch117/casm/cosmic/sw23/SingularityRCor
+
 source ${SINGULARITY_R_COR_HOME}/config
-exit 0
+echo $TMP
+echo $RES
+
 rm -fr ${TMP}
 rm -fr ${RES}
 mkdir -p ${TMP}

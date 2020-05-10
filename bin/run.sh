@@ -21,16 +21,12 @@ echo Cleaning
 #mkdir -p ${TMP}/logs
 
 export LOG_FOLDER=${TMP}/logs
-/software/singularity-v3.5.3/bin/singularity run --bind /lustre:/lustre ${SINGULARITY_R_COR_HOME}/nextflow_latest.sif nextflow run ${SINGULARITY_R_COR_HOME}/bin/workflow.nf
-#${SINGULARITY_R_COR_HOME}/bin/prepare.sh
+
+${SINGULARITY_R_COR_HOME}/bin/nextflow run ${SINGULARITY_R_COR_HOME}/bin/workflow.nf 
 
 exit 0
 
 echo "start LSF"
-PRE_JOB=${JOB}
-JOB=singr
-FOLDER_NUMBER=${NODE_NUM}
-CPU_NUMBER=${NODE_NUM}
 bsub -w "done(${PRE_JOB})" -G team238-grp -q cosmic -o ${LOG_FOLDER}/${JOB}.outfile.%J.%I -e ${LOG_FOLDER}/${JOB}.err.%J.%I -J ${JOB}[1-${FOLDER_NUMBER}]%${CPU_NUMBER} "${SINGULARITY_R_COR_HOME}/bin/singr_wrapper.sh"
 
 

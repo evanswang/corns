@@ -9,4 +9,6 @@
 
 #/software/singularity-v3.5.3/bin/singularity exec --bind /lustre:/lustre ${SINGULARITY_R_COR_HOME}/csvtool_latest.sif R CMD BATCH --no-save ${SINGULARITY_R_COR_HOME}/R/sing.R ${LOG_FOLDER}/Rout.${LSB_JOBINDEX}
 
-/software/singularity-v3.5.3/bin/singularity run --bind /lustre:/lustre --app Rscript ${SINGULARITY_R_COR_HOME}/singularity-r.simg ${SINGULARITY_R_COR_HOME}/R/sing.R
+source ${SINGULARITY_R_COR_HOME}/config 
+
+/software/singularity-v3.5.3/bin/singularity run --bind /lustre:/lustre --app Rscript ${SINGULARITY_R_COR_HOME}/singularity-r.simg ${SINGULARITY_R_COR_HOME}/R/sing.R $1
