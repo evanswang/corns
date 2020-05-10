@@ -6,7 +6,7 @@
 # Function : merge result sub-matrices.
 ###################################################################################
 
-INDEX=$(expr ${LSB_JOBINDEX} - 1)
+INDEX=$1
 
 source ${SINGULARITY_R_COR_HOME}/config
 

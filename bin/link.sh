@@ -6,6 +6,8 @@
 # Function : create symbol links
 ###################################################################################
 
+source ${SINGULARITY_R_COR_HOME}/config
+
 for((i=0;i<$((${NODE_NUM}));i++))
 do
 	for((j=0;j<$((${NODE_NUM}));j++))

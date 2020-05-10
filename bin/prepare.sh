@@ -9,7 +9,7 @@
 ###################################################################################
 
 # load the config file
-SINGULARITY_R_COR_HOME=/lustre/scratch117/casm/cosmic/sw23/SingularityRCor
+#SINGULARITY_R_COR_HOME=/lustre/scratch117/casm/cosmic/sw23/SingularityRCor
 
 source ${SINGULARITY_R_COR_HOME}/config
 echo $TMP
