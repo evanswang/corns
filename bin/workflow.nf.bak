@@ -24,7 +24,7 @@ process calc_proc {
   
   input:
   val block_file from ch_inputBlocks
-  val x from Channel.from(0..3)
+  val x from Channel.from(0..27)
 
   output:
   val 0 into ch_calc  
@@ -42,3 +42,58 @@ process calc_proc {
   
 }
 
+process link_proc {
+  echo false
+
+  input:
+  val input_val from ch_calc.sum()
+
+  output:
+  val 0 into ch_link
+
+  when:
+  input_val == 0
+
+  script:
+  """
+  echo "link_proc"
+  #echo $input_val
+  bash $params.link
+  """
+}
+
+process subMerge_proc {
+  echo false
+
+  input:
+  val input_val from ch_link
+  val x from Channel.from(0..27)
+
+  output:
+  val 0 into ch_subMerge
+
+  when:
+  input_val == 0
+
+  script:
+  """
+  echo "subMerge_proc"
+  $params.subMerge $x
+  """
+}
+
+process merge_proc {
+  echo false
+
+  input:
+  val input_val from ch_subMerge.sum()
+
+  when:
+  input_val == 0
+
+  script:
+  """
+  echo "merge_proc"
+  $params.merge
+  """
+}

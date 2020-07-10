@@ -1,0 +1,12 @@
+#!/bin/bash
+
+##########################################################################
+# Name : singr_wrapper.sh
+# @author : sw23
+# @created date : 29 Apr 2020
+# Function : wrapper to run R cor in LSF
+##########################################################################
+
+source ${SINGULARITY_R_COR_HOME}/config 
+
+/software/singularity-v3.5.3/bin/singularity run --bind /lustre:/lustre --app Rscript ${SINGULARITY_R_COR_HOME}/singularity-r.simg ${SINGULARITY_R_COR_HOME}/R/sing.R $1
