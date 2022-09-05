@@ -15,6 +15,3 @@ TO BE DONE.
 
 ## Benchmark and Evaluation.
 TO BE DONE.
-
-## Acknowledgement
-I acknowledge the support of 橘子, who have contributed to encouraging me and naming this project.
